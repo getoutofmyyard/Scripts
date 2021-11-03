@@ -4,5 +4,4 @@ Add your own variables to puppet-master-vars.yml and run with ansible-playbook, 
 
 ansible-playbook puppet-master-vars.yml -u user -k -K
 
-This will generate a new file, "puppet-master-setup.yml" with the variables you specified. Run this with ansible-playbook and the script will run.
-
+This will generate a new file, "puppet-master-setup.yml" with the variables you specified. Run this with ansible-playbook.
