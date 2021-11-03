@@ -1,4 +1,4 @@
-This script is for Fedora. These instructions assume that you're able to log into the local host via ssh.
+This script installs and starts puppetserver on a Fedora system. These instructions assume that you're able to log into the local host via ssh.
 
 Add your own variables to puppet-master-vars.yml and run with ansible-playbook, e.g.
 
