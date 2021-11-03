@@ -42,7 +42,7 @@ def device_connection(i,q):
 
 		# Define the path of the resulting config backup file.
 		# Each file is named after the device.
-		file_path = "YOUR/PATH/HERE/{}.txt".format(hostname)
+		file_path = f"YOUR/PATH/HERE/{hostname}.txt"
 
 		try:
 
@@ -55,7 +55,7 @@ def device_connection(i,q):
 				# Informational text. print_lock is used to prevent multiple threads
 				# from printing simultaneously.
 				with print_lock:
-					print(hostname + ": " + "Saving file {}".format(file_path))
+					print(hostname + f": " + "Saving file {file_path}"
 
 				write_new_file = config_file.write(output)
 
