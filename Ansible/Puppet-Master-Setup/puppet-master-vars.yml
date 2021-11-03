@@ -1,0 +1,16 @@
+---
+- hosts: 127.0.0.1
+  vars:
+    hosts: mygroup
+    remote_user: foo
+    puppetmaster_hostname: bar
+    fqdn: myhostname.mydomain.com
+    san: myhostname
+    timezone: America/Denver
+
+  tasks:
+    - name: Populate Jinja2 Template
+      template:
+        src: puppet-master-setup.j2
+        dest: /destination/path/of/playbook/puppet-master-setup.yml
+...

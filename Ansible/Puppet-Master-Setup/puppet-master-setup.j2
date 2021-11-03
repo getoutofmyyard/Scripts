@@ -1,0 +1,54 @@
+---
+- hosts: {{ hosts }}
+  remote_user: {{ remote_user }}
+  gather_facts: no
+  become: yes
+  become_user: root
+  ignore_errors: true
+
+  tasks:
+
+  - name: Update DNF cache
+    dnf:
+      update_cache: yes
+
+  - name: Add Puppet Repo
+    command: rpm -i https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
+
+  - name: Install wget
+    dnf:
+      name: wget
+      state: present
+
+  - name: Install puppet agent
+    command: dnf download puppet-agent
+
+  - name: Fix puppet agent
+    command: rpm -ihv --force puppet-agent-7.12.0-1.el8.x86_64.rpm
+
+  - name: Install puppetserver
+    yum:
+      name: puppetserver
+      state: present
+
+  - name: Start puppetmaster service
+    systemd:
+      name: puppetserver
+      state: started
+
+  - name: Open TCP 8140
+    command: firewall-cmd --add-port=8140/tcp --permanent
+
+  - name: Set server hostname
+    hostname:
+      name: {{ puppetmaster_hostname }}
+
+  - name: Set hosts entry for self
+    lineinfile:
+      path: /etc/hosts
+      line: 127.0.0.1 {{ fqdn }} {{ san }}
+
+  - name: Set timezone
+    command: timedatectl set-timezone {{ timezone }}
+ 
+... 
