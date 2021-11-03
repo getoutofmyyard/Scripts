@@ -7,7 +7,7 @@ from queue import Queue
 username = input("Username: ")
 password = getpass("Password: ")
 enable_secret = getpass("Enable secret: ")
-device_type = "cisco_ios"
+device_type = "cisco_ios" #Change to cisco_nxos for Nexus, arista_eos for EOS, etc.
 command = "show run"
 
 # Device file is opened and split into an array of device names
@@ -26,7 +26,6 @@ print_lock = threading.Lock()
 # and return their command output. i = thread, q = my_queue
 def device_connection(i,q):
 
-	# Define a loop. This will run until all jobs are complete.
 	while not queue.empty():
 
 		# Grab a hostname from the queue
@@ -47,7 +46,6 @@ def device_connection(i,q):
 
 		try:
 
-			# Create the config file in "write" mode
 			with open(file_path,"w+") as config_file:
 
 				# Connect to the host with Netmiko and grab command output
@@ -59,10 +57,8 @@ def device_connection(i,q):
 				with print_lock:
 					print(hostname + ": " + "Saving file {}".format(file_path))
 
-				# Write command output to the opened file
 				write_new_file = config_file.write(output)
 
-				# Disconnect from SSH
 				connection.disconnect()
 
 			# Alerts that the thread has completed its task for this
